@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 function Checkout() {
   const { cart } = useCart();
+  const { user } = useAuth();
   const [discountCode, setDiscountCode] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('credit-card');
 
