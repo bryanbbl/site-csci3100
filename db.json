@@ -1,0 +1,28 @@
+{
+    "users": [],
+    "products": [
+      {
+        "id": 1,
+        "name": "Emerald Gemstone",
+        "price": 499.99,
+        "description": "A rare green emerald",
+        "image": "emerald.jpg"
+      },
+      {
+        "id": 2,
+        "name": "Sapphire Gemstone",
+        "price": 599.99,
+        "description": "Deep blue sapphire",
+        "image": "sapphire.jpg"
+      }
+    ],
+    "carts": [],
+    "licenses": [
+      {
+        "id": 1,
+        "key": "AAAA-BBBB-CCCC-DDDD",
+        "status": "active"
+      }
+    ],
+    "orders": []
+  }
