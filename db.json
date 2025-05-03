@@ -16,6 +16,9 @@
         "image": "sapphire.jpg"
       }
     ],
+    "_routes": {
+        "/api/*": "/$1"
+    },
     "carts": [],
     "licenses": [
       {
