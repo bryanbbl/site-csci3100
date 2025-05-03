@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Gemstone Shopping Site - CSCI3100 Project" />
+    
+    <!-- Font Setup (Matches 7.3.1 Requirements) -->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro&display=swap');
+      
+      body {
+        font-family: 'Times New Roman', serif;
+        font-size: 11pt;
+      }
+    </style>
+
+    <!-- Document Title -->
+    <title>Gemstone Shopping Site - Group B4</title>
+
+    <!-- Favicon (Optional) -->
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  </head>
+  <body>
+    <!-- Loading State -->
+    <div id="loading" style="
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: Times New Roman;
+      font-size: 11pt;
+    ">
+      Loading Gemstone Shopping Site...
+    </div>
+
+    <!-- Root DOM Node -->
+    <div id="root"></div>
+
+    <!-- Hide Loading Screen When App Mounts -->
+    <script>
+      document.getElementById('root').onload = function() {
+        document.getElementById('loading').style.display = 'none';
+      };
+    </script>
+  </body>
+</html>
