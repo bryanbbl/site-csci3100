@@ -16,11 +16,14 @@
         "image": "sapphire.jpg"
       }
     ],
+    "_routes": {
+        "/api/*": "/$1"
+    },
     "carts": [],
     "licenses": [
       {
         "id": 1,
-        "key": "AAAA-BBBB-CCCC-DDDD",
+        "key": "1331-1331-1331-1331",
         "status": "active"
       }
     ],
