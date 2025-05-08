@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:5000';
+axios.defaults.withCredentials = true;
 
 const AuthContext = createContext();
 
@@ -38,22 +39,27 @@ export function AuthProvider({ children }) {
   // Check auth status on app load
   useEffect(() => {
     const checkAuth = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+  
       try {
-        const res = await axios.get('/api/check-auth');
+        const res = await axios.get('/api/check-auth', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
         setUser(res.data.user);
       } catch (err) {
         setUser(null);
       }
       setLoading(false);
     };
+  
     checkAuth();
   }, []);
-
-  return (
-    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
-      {children}
-    </AuthContext.Provider>
-  );
 }
 
 export const useAuth = () => useContext(AuthContext);
