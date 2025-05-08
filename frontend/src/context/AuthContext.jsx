@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:5000';
+axios.defaults.baseURL = 'http://localhost:5001';
 
 const AuthContext = createContext();
 
@@ -15,8 +15,7 @@ export function AuthProvider({ children }) {
       setUser(res.data.user);
       localStorage.setItem('token', res.data.token);
     } catch (err) {
-      throw new Error(err.response?.data?.message || 'Login failed');
-      
+      throw new Error(err.response?.data?.error || 'Login failed');
     }
   };
 
@@ -39,22 +38,29 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const checkAuth = async () => {
       const token = localStorage.getItem('token');
+  
       if (!token) {
+        console.log('🚫 No token found — skipping auth check');
+        setUser(null);
         setLoading(false);
         return;
       }
   
       try {
-        const res = await axios.get('/api/check-auth', {
+        const res = await axios.get('http://localhost:5001/api/check-auth', {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
+  
+        console.log('✅ User authenticated:', res.data.user);
         setUser(res.data.user);
       } catch (err) {
+        console.error('❌ Auth check failed:', err.response?.data || err.message || err);
         setUser(null);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
   
     checkAuth();

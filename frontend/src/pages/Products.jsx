@@ -7,13 +7,13 @@ function Products() {
   const [searchQuery, setSearchQuery] = useState('');
 
   // Fetch products (Matches FR03.1.1)
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const res = await axios.get(`/api/products?search=${searchQuery}`);
-      setProducts(res.data.products);
-    };
-    fetchProducts();
-  }, [searchQuery]);
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     const res = await axios.get(`/api/products?search=${searchQuery}`);
+  //     setProducts(res.data.products);
+  //   };
+  //   fetchProducts();
+  // }, [searchQuery]);
 
   return (
     <div>
