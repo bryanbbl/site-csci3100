@@ -4,7 +4,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',  // allow your frontend
+    credentials: true                 // allow cookies/headers
+  }));
 app.use(express.json());
 
 const SECRET_KEY = 'supersecret123';
