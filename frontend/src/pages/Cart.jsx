@@ -14,7 +14,7 @@ function Cart() {
   const updateQuantity = async (productId, newQuantity) => {
     try {
       await axios.put('/api/cart/update', {
-        userId: user._id,
+        userId: user.id,
         productId,
         quantity: newQuantity
       });

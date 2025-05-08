@@ -12,7 +12,7 @@ export function CartProvider({ children }) {
   useEffect(() => {
     if (user) {
       const fetchCart = async () => {
-        const res = await axios.get(`/api/cart/${user._id}`);
+        const res = await axios.get(`/api/cart/${user.id}`);
         setCart(res.data.cart);
       };
       fetchCart();
@@ -23,7 +23,7 @@ export function CartProvider({ children }) {
   const addToCart = async (productId, quantity) => {
     try {
       const res = await axios.post('/api/cart/add', {
-        userId: user._id, 
+        userId: user.id, 
         productId, 
         quantity
       });

@@ -14,13 +14,21 @@ app.use(bodyParser.json());
 // Mock user database
 const users = [
   {
-    id: 1,
+    
+    _id: 1,
     username: 'john_doe',
     email: 'john@example.com',
     passwordHash: bcrypt.hashSync('password123', 10), // hashed password
   },
 ];
 
+const carts = {
+    1: [
+      { productId: 'abc123', name: 'Product A', quantity: 2 },
+      { productId: 'xyz789', name: 'Product B', quantity: 1 },
+    ],
+  };
+  
 // LOGIN route
 app.post('/api/login', async (req, res) => {
     
@@ -39,7 +47,7 @@ app.post('/api/login', async (req, res) => {
   }
 
   // Generate JWT
-  const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
+  const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
     expiresIn: '1h',
   });
 
@@ -47,7 +55,7 @@ app.post('/api/login', async (req, res) => {
   res.json({
     token,
     user: {
-      id: user.id,
+      id: user._id,
       username: user.username,
       email: user.email,
     },
@@ -58,24 +66,24 @@ app.post('/api/login', async (req, res) => {
 app.get('/api/check-auth', (req, res) => {
     
   const authHeader = req.headers.authorization;
-  console.log('🔐 Auth header:', authHeader);
+  
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
   const token = authHeader.split(' ')[1];
-  console.log('🔑 Token:', token);
+  
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    console.log('✅ Decoded JWT:', decoded);
-    const user = users.find((u) => u.id === decoded.id);
+   
+    const user = users.find((u) => u._id === decoded.id);
     if (!user) {
       return res.status(401).json({ error: 'User not found' });
     }
 
     res.json({
       user: {
-        id: user.id,
+        id: user._id,
         username: user.username,
         email: user.email,
       },
@@ -84,7 +92,16 @@ app.get('/api/check-auth', (req, res) => {
     return res.status(401).json({ error: 'Invalid token' });
   }
 });
-
+app.get('/api/cart/:userId', (req, res) => {
+    const userId = parseInt(req.params.userId);
+    const cart = carts[userId];
+  
+    if (!cart) {
+      return res.status(404).json({ message: 'Cart not found' });
+    }
+  
+    res.json(cart);
+  });
 app.get('/', (req, res) => {
     res.send('API is running 🚀');
   });
