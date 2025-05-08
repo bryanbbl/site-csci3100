@@ -15,7 +15,8 @@ export function AuthProvider({ children }) {
       setUser(res.data.user);
       localStorage.setItem('token', res.data.token);
     } catch (err) {
-      throw new Error(err.response?.data?.error || 'Login failed');
+      throw new Error(err.response?.data?.message || 'Login failed');
+      
     }
   };
 

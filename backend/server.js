@@ -19,18 +19,35 @@ const users = [
 ];
 
 app.post('/api/login', (req, res) => {
-  const { email, password } = req.body;
-  const user = users.find((u) => u.email === email);
-  if (!user || !bcrypt.compareSync(password, user.password)) {
-    return res.status(401).json({ message: 'Invalid email or password' });
-  }
-
-  const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, {
-    expiresIn: '1h'
+    const { email, password } = req.body;
+    console.log('Login request:', { email, password });
+  
+    const user = users.find((u) => u.email === email);
+    if (!user) {
+      console.log('❌ User not found');
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+  
+    const match = bcrypt.compareSync(password, user.password);
+    console.log('Password match:', match);
+  
+    if (!match) {
+      console.log('❌ Password mismatch');
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+  
+    const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, {
+      expiresIn: '1h'
+    });
+  
+    res.json({
+      token,
+      user: {
+        id: user.id,
+        email: user.email
+      }
+    });
   });
-
-  res.json({ token });
-});
 
 app.listen(5000, () => {
   console.log('Auth server running on http://localhost:5000');
