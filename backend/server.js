@@ -11,11 +11,7 @@ app.use(cors({
   credentials: true
 }));
 
-// ✅ Handle preflight requests
-app.options('*', cors({
-  origin: 'http://localhost:3000',
-  credentials: true
-}));
+
 
 app.use(express.json());
 
