@@ -9,21 +9,21 @@ export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
   // Fetch cart on login (Matches FR03.2)
-  useEffect(() => {
-    if (user) {
-      const fetchCart = async () => {
-        const res = await axios.get(`/api/cart/${user.id}`);
-        setCart(res.data.cart);
-      };
-      fetchCart();
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     const fetchCart = async () => {
+  //       const res = await axios.get(`/api/cart/${user._id}`);
+  //       setCart(res.data.cart);
+  //     };
+  //     fetchCart();
+  //   }
+  // }, [user]);
 
   // Add to cart (Matches FR03.2.2)
   const addToCart = async (productId, quantity) => {
     try {
       const res = await axios.post('/api/cart/add', {
-        userId: user.id, 
+        userId: user._id, 
         productId, 
         quantity
       });

@@ -55,7 +55,7 @@ export function AuthProvider({ children }) {
             Authorization: `Bearer ${token}`,
           },
         });
-  
+        console.log('🔐 Token:', req.headers.authorization);
         console.log('✅ User authenticated:', res.data.user);
         setUser(res.data.user);
       } catch (err) {
