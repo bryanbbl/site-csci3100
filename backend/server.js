@@ -18,7 +18,7 @@ const users = [
   }
 ];
 
-app.post('/login', (req, res) => {
+app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
   const user = users.find((u) => u.email === email);
   if (!user || !bcrypt.compareSync(password, user.password)) {
